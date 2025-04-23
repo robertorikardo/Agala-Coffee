@@ -5,7 +5,6 @@ document.addEventListener('alpine:init', () => {
         { id: 2, name: 'Kopi Gula Aren Cold', img: 'P3', price: 18000},
       ],
   }));
-
   Alpine.store('cart', {
       items: [],
       total: 0,
