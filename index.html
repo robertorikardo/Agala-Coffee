@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agala Coffee</title>
+
+    <!-- Fonts -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,300;0,400;0,700;1,700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <!-- My Style -->
+
+    <link rel="stylesheet" href="css/style.css" />
+
+    <!--AlpineJs-->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <script src="src/app.js"></script>
+  </head>
+  <body>
+
+    <!-- Navbar start -->
+    <nav class="navbar" x-data>
+      <a href="#" class="navbar-logo">Agala <span>coffee</span>.</a>
+
+      <div class="navbar-nav">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#menu">Menu</a>
+        <a href="#products">Produk</a>
+        <a href="#contact">Contact</a>
+      </div>
+
+      <div class="navbar-extra">
+        <a href="#" id="search-button"><i data-feather="search"></i></a>
+        <a href="#" id="shopping-cart-button">
+          <i data-feather="shopping-cart"></i>
+          <span class="quantity-badge" x-show="$store.cart.quantity "  x-text="$store.cart.quantity"></span>
+        </a>
+        <a href="#" id="hamburger-menu"> <i data-feather="menu"></i></a>
+      </div>
+
+      <!--Search From start -->
+
+      <div class="search-form">
+        <input type="search" id="search-box" placeholder="search here...">
+        <label for="search-box"><i data-feather="search"></i></label>
+      </div>
+      
+      <!--Search From end -->
+
+      <!--Shopping cart star-->
+
+
+      <div class="shopping-cart">
+        <template x-for="(item, index) in $store.cart.items" x-keys="index">
+          <div class="cart-item">
+            <img :src="`img/${item.img}.jpg`" :alt="item.name">
+            <div class="item-detail">
+              <h3 x-text="item.name"></h3>
+              <div class="item-price">
+                <span x-text="rupiah(item.price)"></span> &times;
+                <button id="remove" @click="$store.cart.remove(item.id)">&minus;</button>
+                <span x-text="item.quantity"></span>
+                <button id="add" @click="$store.cart.add(item)">&plus;</button> &equals;
+                <span x-text="rupiah(item.total)"></span>
+              </div>
+            </div>
+           
+          </div>
+        </template>
+        <h4 x-show="!$store.cart.items.length" style="margin-top: 1rem;">Cart is Empty</h4>
+        <h4 x-show="$store.cart.items.length">Total : <span x-text="rupiah($store.cart.total)"></span></h4>
+
+        <div class="form-container" x-show="$store.cart.items.length">
+          <form action=""id="checkoutForm">
+            <h5>Customer Detail</h5>
+
+            <label for="name">
+              <span>Name</span>
+              <input type="text" name="name" id="name">
+          </label>
+          
+          <button class="checkout-button" type="button" onclick="validateAndCheckout()">Checkout</button>
+          
+          <script>
+          function validateAndCheckout() {
+              const nameInput = document.getElementById("name");
+              const name = nameInput.value.trim(); // trim() untuk menghapus spasi di awal dan akhir
+          
+              if (name === "") {
+                  alert("Mohon masukkan nama Anda sebelum melanjutkan checkout.");
+                  return; // Menghentikan fungsi jika nama kosong
+              }
+          
+              checkoutViaWhatsApp(name);
+          }
+          
+          function checkoutViaWhatsApp(name) {
+              const phoneNumber = "6282358489428"; // Ganti dengan nomor WhatsApp Anda
+              const message = encodeURIComponent(`Halo, nama saya ${name}. Saya ingin melakukan pembayaran untuk pesanan saya.`);
+              const whatsappURL = `https://wa.me/${phoneNumber}?text=${message}`;
+              window.open(whatsappURL, '_blank');
+          }
+          </script>
+          </form>
+        </div>
+      </div>
+      <!--Shopping cart end-->
+    </nav>
+    <!-- Navbar end -->
+
+    <!-- Hero Section start -->
+    <section class="hero" id="home">
+      <main class="content">
+        <h1>Kopi Asli <span>dari Papua</span></h1>
+        <p>
+          AUTHENTIC & HARMONY UNFORGETTABLE TASTE
+        </p>
+        <p></p>
+        
+      </main>
+    </section>
+  
+    <!-- Hero Section end -->
+
+    <!-- About Section strat-->
+    <section id="about" class="about">
+      <h2><span>Agala</span>Coffe</h2>
+
+      <div class="row">
+        <div class="about-img">
+          <img src="img/kopi2.jpg" alt="Tentang Kami" />
+        </div>
+        <div class="content">
+          <h3>Kopi</h3>
+          <p>
+            Agala Coffee adalah tim enterepreneur SMA Sekolah Anak Indonesia yang dibentuk pada Januari 2024. Tim Agala terdiri dari Ben sebagai CEO, Mariyon sebagai CFO, Oni sebagai COO dan Soni sebagai CMO dan Rori sebagai CSO. 
+
+          </p>
+          <p>
+            Sesuai dengan namanya, Agala Coffee bergerak dalam kegiatan memproduksi kopi dari green bean menjadi roasted bean. Saat ini, kopi yang diproduksi oleh Agala Coffee adalah kopi asli Papua seperti arabika Intan Jaya, Arabika Pegunungan Bintang dll. 
+
+          </p>
+        </div>
+      </div>
+    </section>
+    <!-- About Section end-->
+    <!-- Menu Section strat -->
+    <section id="menu" class="menu">
+      <h2><span>Menu</span> kami</h2>
+      <p>
+        Ini beberapa menu kami
+      </p>
+
+
+      <div class="row">
+        <div class="menu-card">
+          <img src="img/P2.jpg"
+           alt="Arinkop"class="menu-card-img"style="width: 200px; height= 300px">
+           <h3 class="menu-card-title">
+             Hot</h3>
+            <p class="menu-card-price">IDR 50K</p>
+        </div>
+        <div class="menu-card">
+          <img src="img/P3.jpg"
+           alt="Arinkop"class="menu-card-img"style="width: 200px; height= 300px">
+           <h3 class="menu-card-title">
+            Cold</h3>
+            <p class="menu-card-price">IDR 50K</p>
+        </div>
+       
+
+      </div>
+    </section>
+    <!-- Menu Section end -->
+
+
+    <!--Products Setion strat -->
+    <section class="products" id="products" x-data="products">
+      <h2><span>Produk Unggulan</span> Kami</h2>
+      <p>Silakan Pesan Produk kami</p>
+
+
+
+      <div class="row">
+        <template x-for="(item, index) in items" x-key="index">         
+       
+        <div class="product-card">
+            <div class="product-icons">
+              <a href="#" @click.prevent="$store.cart.add(item)">      
+                <i data-feather="shopping-cart"></i>
+
+<script src="https://cdn.jsdelivr.net/npm/feather-icons@4.29.1/dist/feather.min.js"></script>
+<script>
+  feather.replace()
+</script>
+  
+ 
+              </a>
+              <!-- <a href="#"class="item-detail-button">
+                <svg
+                width="24"
+                height="24"
+                fill="none"
+                stroke="currentColor" 
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <use href="img/feather-sprite.svg#eye" />
+                
+                
+              </svg> -->
+              </a>
+            </div>
+            <div class="product-image">
+              <img :src="`img/${item.img}.jpg`" :alt="item.name">
+            </div>
+            <div class="product-content">
+              <h3 x-text="item.name"></h3>
+              <div class="product-stars">
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="..." crossorigin="anonymous" />
+                <i class="fas fa-star" style="width: 24px; height: 24px; color: currentColor;"></i>
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="..." crossorigin="anonymous" />
+                <i class="fas fa-star" style="width: 24px; height: 24px; color: currentColor;"></i>
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="..." crossorigin="anonymous" />
+                <i class="fas fa-star" style="width: 24px; height: 24px; color: currentColor;"></i>
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="..." crossorigin="anonymous" />
+                <i class="fas fa-star" style="width: 24px; height: 24px; color: currentColor;"></i>
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="..." crossorigin="anonymous" />
+                <i class="fas fa-star" style="width: 24px; height: 24px; color: currentColor;"></i>
+              </div>
+              <div class="product-price"><span x-text="rupiah(item.price)"></span></div>
+            </div>
+        </div>
+      </template>
+      </div>
+    </section>
+
+    <!--Products Setion end -->
+
+
+    <!-- Contact Section start -->
+    <section id="contact" class="contact">
+      <h2><span>kontak</span> kami</h2>
+      <p>
+       Jika ingin tahu banyak tentang kami bisa langsung saja datang ke tempat kami 
+      </p>
+
+      <div class="row">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3963.9124426520657!2d106.8481125294735!3d-6.532741825201512!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69fbc22082da87%3A0xc15b934cfecdc8e0!2sSekolah%20Anak%20Indonesia!5e0!3m2!1sen!2sid!4v1722342638174!5m2!1sen!2sid"  style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"class="map"></iframe>
+
+        <form id="myForm">
+          <div class="input-group">
+              <i data-feather="user"></i>
+              <input type="text" name="nama" placeholder="nama">
+          </div>
+          <div class="input-group">
+              <i data-feather="mail"></i>
+              <input type="email" name="email" placeholder="email">
+          </div>
+          <div class="input-group">
+              <i data-feather="phone"></i>
+              <input type="tel" name="no_hp" placeholder="no hp">
+          </div>
+          <button type="submit" class="btn">Kirim pesan</button>
+      </form>
+      </div>            
+
+    </section>
+    <script>
+            document.getElementById('myForm').addEventListener('submit', function(event) {
+                event.preventDefault(); // Mencegah pengiriman formulir standar
+        
+                const nama = this.querySelector('[name="nama"]').value.trim();
+                const email = this.querySelector('[name="email"]').value.trim();
+                const no_hp = this.querySelector('[name="no_hp"]').value.trim();
+                const nomorWhatsApp = '6282358489428'; // Ganti dengan nomor WhatsApp yang dituju
+        
+                if (nama && email && no_hp) {
+                    const pesan = `Halo, perkenalkan nama saya ${nama}. Email saya adalah ${email} dan nomor HP saya ${no_hp}.`;
+                    const urlWhatsApp = `https://wa.me/${nomorWhatsApp}?text=${encodeURIComponent(pesan)}`;
+        
+                    window.open(urlWhatsApp, '_blank');
+                } else {
+                    alert('Harap isi semua kolom (Nama, Email, dan Nomor HP).'); // Atau tampilkan pesan error yang lebih baik
+                }
+            });
+        </script>
+
+   
+   
+    
+    
+
+    
+    
+
+    <!-- Contact Section end -->
+
+    <!--- Footer start -->
+    <footer>
+      <div class="social">
+        <a href="https://www.instagram.com/agala_coffe/"><i 
+          data-feather="instagram"></i></a>
+        <!-- <a href="#"><i 
+          data-feather="twitter"></i
+          ></a>
+        <a href="#"><i 
+          data-feather="facebook"></i
+          ></a>
+        <a href="#"><i 
+          data-feather="tiktok"></i
+          ></a>
+        </div> -->
+
+          <div class="links">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#menu">Menu</a>
+            <a href="#contact">Kontak</a>
+          </div>
+
+      <div class="credit">
+        <p>Created by <a href=""> Richardo                  
+        </a>. | &copy; 2025. </span></p>
+      </div>
+    </footer>
+
+    <!--- Footer end -->
+
+
+    <!--Modal Box Item Detail start-->
+    <div class="modal" id="item-detail-modal">
+      <div class="modal-container">
+        <a href="#" class="close-icon"><i data-feather="x"></i></a>
+        <div class="modal-content">
+          <img src="img/P3.jpg" alt="Product 1">
+          <div class="product-content">
+            <h3>Product 1</h3>
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Debitis enim molestias hic velit nemo cupiditate quaerat necessitatibus cumque minima non voluptatum, architecto, dolorem error recusandae.</p>
+            <div class="product-stars">
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star" class="star-full"></i>
+            </div>
+            <div class="product-price">IDR 18K </div>
+            <a href="#"><i data-feather="shopping-cart"></i> <span>add to cart
+                </span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--Modal Box Item Detail end-->
+
+    <!-- Feather Icons -->
+    <script>
+      feather.replace();
+    </script>
+
+    <!-- My  Javascript -->
+    <script src="js/script.js"></script>
+    
+    
+  </body>
+</html>
